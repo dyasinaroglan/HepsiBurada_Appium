@@ -1,6 +1,7 @@
 package tests;
 
 import base.BaseClass;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
@@ -26,16 +27,20 @@ import java.time.Duration;
 
 import static java.lang.Thread.sleep;
 import static utils.Locators.*;
+import static utils.Utils.openApp;
 
 public class Scenario1 extends Driver{
 
+    AppiumDriver<?> driver;
+    WebDriverWait wait;
     BaseClass baseClass = new BaseClass();
-    WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 45);
+
 
     @Given("uygulama açılır")
     public void uygulamaAçılır() throws MalformedURLException {
-
-        Utils.openApp(Devices.HUAWEI, App.HEPSIBURADA);
+        //bu cihazda ve bu uygulamayı aç diyorum
+        driver = openApp(Devices.HUAWEI, App.HEPSIBURADA);
+        wait = new WebDriverWait(driver,40);
     }
 
     @When("Anasayfada Konum alanına Kklanır")
@@ -47,8 +52,7 @@ public class Scenario1 extends Driver{
 
     @Then("İl, ilçe ve mahalle seçilir ve kaydet butonuna Kklanır")
     public void ilIlçeVeMahalleSeçilirVeKaydetButonunaKklanır() throws InterruptedException {
-
-        WebElement il = Driver.getDriver().findElement(lIlSelect);
+        
         wait.until(ExpectedConditions.elementToBeClickable(lIlSelect)).click();
         sleep(2000);
         baseClass.scrollTo(0.5,0.9,0.5,0.1);
@@ -65,6 +69,7 @@ public class Scenario1 extends Driver{
 
     }
 
+
     @Then("Konumunuz Kaydedildi popup’ı kontrol edilir")
     public void konumunuzKaydedildiPopupIKontrolEdilir() throws InterruptedException {
         sleep(1000);
@@ -80,7 +85,7 @@ public class Scenario1 extends Driver{
 
     @Then("Tab bar üzerinden kategoriler tabına Kklanır")
     public void tabBarÜzerindenKategorilerTabınaKklanır() throws InterruptedException {
-        wait.until(ExpectedConditions.elementToBeClickable(lKategorilerimButton)).click();
+       // wait.until(ExpectedConditions.elementToBeClickable(lKategorilerimButton)).click();
     }
 
     @Then("Herhangi bir kategori seçilip listeleme sayfasına yönlenilir")
