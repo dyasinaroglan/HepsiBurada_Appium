@@ -2,73 +2,56 @@ package tests;
 
 import base.BaseClass;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.touch.WaitOptions;
-import io.appium.java_client.touch.offset.PointOption;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import utils.App;
 import utils.Devices;
 import utils.Driver;
-import utils.Utils;
 
-import javax.swing.*;
 import java.net.MalformedURLException;
-import java.time.Duration;
 
 import static java.lang.Thread.sleep;
 import static utils.Locators.*;
 import static utils.Utils.openApp;
 
-public class Scenario1 extends Driver{
+public class Scenario1 extends BaseClass {
 
     AppiumDriver<?> driver;
     WebDriverWait wait;
-    BaseClass baseClass = new BaseClass();
-
 
     @Given("uygulama açılır")
     public void uygulamaAçılır() throws MalformedURLException {
         //bu cihazda ve bu uygulamayı aç diyorum
-        driver = openApp(Devices.HUAWEI, App.HEPSIBURADA);
+        openApp(Devices.HUAWEI, App.HEPSIBURADA);
         wait = new WebDriverWait(driver,40);
     }
 
     @When("Anasayfada Konum alanına Kklanır")
     public void anasayfadaKonumAlanınaKklanır() throws InterruptedException {
-
-        wait.until(ExpectedConditions.elementToBeClickable(lKonum)).click();
+        clickTo(lKonum);
 
     }
 
     @Then("İl, ilçe ve mahalle seçilir ve kaydet butonuna Kklanır")
     public void ilIlçeVeMahalleSeçilirVeKaydetButonunaKklanır() throws InterruptedException {
-        
-        wait.until(ExpectedConditions.elementToBeClickable(lIlSelect)).click();
+        clickTo(lIlSelect);
         sleep(2000);
-        baseClass.scrollTo(0.5,0.9,0.5,0.1);
-        wait.until(ExpectedConditions.elementToBeClickable(lIstanbul)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(lIlceSelect)).click();
-        baseClass.scrollTo(0.5,0.9,0.5,0.1);
-        wait.until(ExpectedConditions.elementToBeClickable(lMaltepe)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(lMahalleSelect)).click();
-        baseClass.scrollTo(0.5,0.9,0.5,0.3);
 
-        wait.until(ExpectedConditions.elementToBeClickable(lZümrütevler)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(lKaydetButton)).click();
-
+        scrollTo(0.5, 0.9, 0.5, 0.1);
+        clickTo(lIstanbul);
+        clickTo(lIlceSelect);
+        scrollTo(0.5, 0.9, 0.5, 0.1);
+        clickTo(lMaltepe);
+        clickTo(lMahalleSelect);
+        scrollTo(0.5, 0.9, 0.5, 0.3);
+        clickTo(lZümrütevler);
+        clickTo(lKaydetButton);
 
     }
-
 
     @Then("Konumunuz Kaydedildi popup’ı kontrol edilir")
     public void konumunuzKaydedildiPopupIKontrolEdilir() throws InterruptedException {
@@ -76,23 +59,24 @@ public class Scenario1 extends Driver{
         String actual = Driver.getDriver().findElement(lKonumText).getText();
         String expected = "Konumunuz kaydedildi.";
         try {
-            Assert.assertEquals(actual,expected);
+            Assert.assertEquals(actual, expected);
             System.out.println("Test Passed");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Konumunuz Kaydedildi popup’ı kontrol edilemedi");
         }
     }
 
     @Then("Tab bar üzerinden kategoriler tabına Kklanır")
     public void tabBarÜzerindenKategorilerTabınaKklanır() throws InterruptedException {
-       // wait.until(ExpectedConditions.elementToBeClickable(lKategorilerimButton)).click();
+        clickTo(lKategorilerimButton);
+
     }
 
     @Then("Herhangi bir kategori seçilip listeleme sayfasına yönlenilir")
     public void herhangiBirKategoriSeçilipListelemeSayfasınaYönlenilir() throws InterruptedException {
-        baseClass.clickTo(lTelephonesButton);
+        clickTo(lTelephonesButton);
         sleep(1000);
-        baseClass.clickTo(lTümüButton);
+        clickTo(lTümüButton);
     }
 
     @And("Listeleme sayfasında Yarın Kapında alanında gelen il bilgisi ile anasayfada seçilen il bilgisinin aynı olduğu kontrol edilir")

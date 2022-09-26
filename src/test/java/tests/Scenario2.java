@@ -1,6 +1,7 @@
 package tests;
 
 import base.BaseClass;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -11,13 +12,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import utils.Driver;
 
+import java.net.MalformedURLException;
+
 import static java.lang.Thread.sleep;
 import static utils.Locators.*;
 
 public class Scenario2 extends Driver {
 
     BaseClass baseClass = new BaseClass();
-    WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 45);
+    WebDriverWait wait = new WebDriverWait(driver,40);
 
     @When("Anasayfada süper fiyat,süper teklif'e tıklanır")
     public void anasayfadaSüperFiyatSüperTeklifETıklanır() throws InterruptedException {

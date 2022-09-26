@@ -1,16 +1,25 @@
 package base;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.App;
+import utils.Devices;
 import utils.Driver;
 
+import java.net.MalformedURLException;
 import java.time.Duration;
 
-public class BaseClass extends Driver {
+public class BaseClass {
+
+    AppiumDriver<?> driver = Driver.getDriver();
+    WebDriverWait wait = new WebDriverWait(driver,40);
+
 
     public void scrollTo(double x, double y, double x1, double y1) throws InterruptedException {
         Dimension dimension = Driver.getDriver().manage().window().getSize();
@@ -30,11 +39,11 @@ public class BaseClass extends Driver {
     }
 
     public void clickTo(By locator) {
-        Driver.getDriver().findElement(locator).click();
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
 
     public void sendKeysTo(By locator, String text) {
-        Driver.getDriver().findElement(locator).sendKeys(text);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).sendKeys(text);
     }
 
     public void scrollTo(double x, double y, double x1, double y1, By locator) throws InterruptedException {

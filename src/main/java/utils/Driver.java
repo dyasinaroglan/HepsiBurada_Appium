@@ -21,7 +21,6 @@ public class Driver {
 
     public static AndroidDriver<MobileElement> driver;
     static AppiumDriverLocalService service;
-    WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 45);
 
     public static AppiumDriver<MobileElement> getDriver(Devices device, App app) throws MalformedURLException {
         driver = new AndroidDriver<>(service.getUrl(), capabilities(device,app));
